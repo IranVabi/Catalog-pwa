@@ -1,0 +1,23 @@
+[
+    {
+        "name": "اسپیکر بلوتوثی قابل حمل",
+        "category": "اسپیکر",
+        "brand": "شیائومی",
+        "price": 850000,
+        "image": "assets/speaker.jpg"
+    },
+    {
+        "name": "کاور ژله‌ای گوشی آیفون",
+        "category": "لوازم جانبی",
+        "brand": "اپل",
+        "price": 150000,
+        "image": "assets/cover.jpg"
+    },
+    {
+        "name": "شارژر فست سامسونگ",
+        "category": "لوازم جانبی",
+        "brand": "سامسونگ",
+        "price": 320000,
+        "image": "assets/charger.jpg"
+    }
+]

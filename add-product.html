@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>مدیریت محصولات | ایران وابی</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body {
+      font-family: 'Vazir', sans-serif;
+      background-color: #f8f9fa;
+    }
+    .sidebar {
+      height: 100vh;
+      background-color: #FF0000;
+      color: white;
+      padding-top: 2rem;
+      position: fixed;
+      width: 250px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 1rem;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      border-radius: 10px;
+    }
+    .sidebar a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .content {
+      margin-right: 260px;
+      padding: 2rem;
+    }
+    .btn-primary {
+      background-color: #FF0000;
+      border: none;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #cc0000;
+    }
+    .table-hover tbody tr:hover {
+      background-color: #ffe6e6;
+    }
+    .modal-header {
+      background-color: #FF0000;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- سایدبار -->
+<div class="sidebar">
+  <h3 class="text-center">ایران وابی</h3>
+  <a href="#"><i class="bi bi-box-seam"></i> محصولات</a>
+  <a href="#" data-bs-toggle="modal" data-bs-target="#categoryModal"><i class="bi bi-tags"></i> مدیریت دسته‌بندی</a>
+  <a href="#" data-bs-toggle="modal" data-bs-target="#brandModal"><i class="bi bi-building"></i> مدیریت برند</a>
+</div>
+
+<!-- محتوای اصلی -->
+<div class="content">
+  <div id="topBar" class="d-flex justify-content-between align-items-center mb-4">
+    <h2>مدیریت محصولات</h2>
+    <button id="addProductBtn" class="btn btn-primary">➕ افزودن محصول</button>
+  </div>
+
+  <!-- لیست محصولات -->
+  <div id="productListSection">
+    <input type="text" id="searchInput" class="form-control mb-3" placeholder="جستجو در محصولات...">
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>نام محصول</th>
+          <th>دسته‌بندی</th>
+          <th>برند</th>
+          <th>قیمت خرده</th>
+          <th>قیمت عمده</th>
+          <th>عملیات</th>
+        </tr>
+      </thead>
+      <tbody id="productTableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- فرم افزودن محصول -->
+  <div id="addProductSection" style="display: none;">
+    <h2 class="mb-4">افزودن محصول جدید</h2>
+    <form id="addProductForm" class="mb-5">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label>نام محصول:</label>
+          <input type="text" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>عکس محصول:</label>
+          <input type="file" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>دسته‌بندی:</label>
+          <select id="categorySelect" class="form-select" required></select>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>برند:</label>
+          <select id="brandSelect" class="form-select" required></select>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label>قیمت خرده فروشی:</label>
+          <input type="number" class="form-control" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label>قیمت عمده فروشی:</label>
+          <input type="number" class="form-control" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label>حداقل تعداد سفارش:</label>
+          <input type="number" class="form-control" required>
+        </div>
+      </div>
+      <label class="d-block mb-2">نوع حداقل سفارش:</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="minType" value="each" checked>
+        <label class="form-check-label">هر محصول جداگانه</label>
+      </div>
+      <div class="form-check form-check-inline mb-4">
+        <input class="form-check-input" type="radio" name="minType" value="total">
+        <label class="form-check-label">مجموع محصولات</label>
+      </div>
+      <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-success">ثبت محصول</button>
+        <button type="button" id="backToListBtn" class="btn btn-secondary">بازگشت به لیست</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- مودال مدیریت دسته‌بندی -->
+<div class="modal fade" id="categoryModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">مدیریت دسته‌بندی</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="text" id="newCategory" class="form-control mb-3" placeholder="نام دسته‌بندی جدید">
+      <button onclick="addCategory()" class="btn btn-primary w-100 mb-3">➕ افزودن</button>
+      <ul id="categoryList" class="list-group"></ul>
+    </div>
+  </div></div>
+</div>
+
+<!-- مودال مدیریت برند -->
+<div class="modal fade" id="brandModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">مدیریت برند</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="text" id="newBrand" class="form-control mb-3" placeholder="نام برند جدید">
+      <button onclick="addBrand()" class="btn btn-primary w-100 mb-3">➕ افزودن</button>
+      <ul id="brandList" class="list-group"></ul>
+    </div>
+  </div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// بارگذاری از localStorage
+let products   = JSON.parse(localStorage.getItem('products'))   || [];
+let categories = JSON.parse(localStorage.getItem('categories')) || [];
+let brands     = JSON.parse(localStorage.getItem('brands'))     || [];
+let editIndex  = null;
+
+// نمایش دسته‌بندی‌ها
+function renderCategories() {
+  const list = document.getElementById('categoryList');
+  const select = document.getElementById('categorySelect');
+  list.innerHTML = "";
+  select.innerHTML = '<option value="">انتخاب کنید</option>';
+  categories.forEach((cat, i) => {
+    list.innerHTML += `<li class="list-group-item d-flex justify-content-between">${cat}<button class="btn btn-danger btn-sm" onclick="deleteCategory(${i})">حذف</button></li>`;
+    select.innerHTML += `<option value="${cat}">${cat}</option>`;
+  });
+  localStorage.setItem('categories', JSON.stringify(categories));
+}
+function addCategory() {
+  const cat = document.getElementById('newCategory').value.trim();
+  if (cat) {
+    categories.push(cat);
+    document.getElementById('newCategory').value = "";
+    renderCategories();
+  }
+}
+function deleteCategory(i) {
+  if (confirm("حذف شود؟")) {
+    categories.splice(i, 1);
+    renderCategories();
+  }
+}
+
+// برند
+function renderBrands() {
+  const list = document.getElementById('brandList');
+  const select = document.getElementById('brandSelect');
+  list.innerHTML = "";
+  select.innerHTML = '<option value="">انتخاب کنید</option>';
+  brands.forEach((br, i) => {
+    list.innerHTML += `<li class="list-group-item d-flex justify-content-between">${br}<button class="btn btn-danger btn-sm" onclick="deleteBrand(${i})">حذف</button></li>`;
+    select.innerHTML += `<option value="${br}">${br}</option>`;
+  });
+  localStorage.setItem('brands', JSON.stringify(brands));
+}
+function addBrand() {
+  const br = document.getElementById('newBrand').value.trim();
+  if (br) {
+    brands.push(br);
+    document.getElementById('newBrand').value = "";
+    renderBrands();
+  }
+}
+function deleteBrand(i) {
+  if (confirm("حذف شود؟")) {
+    brands.splice(i, 1);
+    renderBrands();
+  }
+}
+
+// فرم و لیست محصولات
+const addProductBtn = document.getElementById('addProductBtn');
+const backToListBtn = document.getElementById('backToListBtn');
+const productListSection = document.getElementById('productListSection');
+const addProductSection = document.getElementById('addProductSection');
+const topBar = document.getElementById('topBar');
+
+addProductBtn.onclick = () => {
+  productListSection.style.display = 'none';
+  addProductSection.style.display = 'block';
+  topBar.style.display = 'none';
+};
+backToListBtn.onclick = () => {
+  productListSection.style.display = 'block';
+  addProductSection.style.display = 'none';
+  topBar.style.display = 'flex';
+};
+
+// ذخیره و نمایش محصول
+document.getElementById('addProductForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const inputs = this.querySelectorAll('input, select');
+  const product = {
+    name: inputs[0].value.trim(),
+    image: inputs[1].files[0]?.name || '',
+    category: inputs[2].value,
+    brand: inputs[3].value,
+    retailPrice: inputs[4].value,
+    wholesalePrice: inputs[5].value,
+    minOrder: inputs[6].value,
+    minType: document.querySelector('input[name="minType"]:checked').value
+  };
+  if (!product.name || !product.category || !product.brand) return alert('همه فیلدها الزامی است');
+  if (editIndex === null) {
+    products.push(product);
+  } else {
+    products[editIndex] = product;
+    editIndex = null;
+  }
+  localStorage.setItem('products', JSON.stringify(products));
+  this.reset();
+  renderProducts();
+  backToListBtn.click();
+});
+
+function renderProducts(search = "") {
+  const tbody = document.getElementById('productTableBody');
+  tbody.innerHTML = "";
+  products.filter(p =>
+    p.name.toLowerCase().includes(search) ||
+    p.category.toLowerCase().includes(search) ||
+    p.brand.toLowerCase().includes(search)
+  ).forEach((p, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${p.name}</td>
+        <td>${p.category}</td>
+        <td>${p.brand}</td>
+        <td>${p.retailPrice} تومان</td>
+        <td>${p.wholesalePrice} تومان</td>
+        <td>
+          <button class="btn btn-warning btn-sm" onclick="editProduct(${i})">ویرایش</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteProduct(${i})">حذف</button>
+        </td>
+      </tr>`;
+  });
+}
+function deleteProduct(i) {
+  if (confirm("حذف شود؟")) {
+    products.splice(i, 1);
+    localStorage.setItem('products', JSON.stringify(products));
+    renderProducts();
+  }
+}
+function editProduct(i) {
+  const p = products[i];
+  const inputs = document.querySelectorAll('#addProductForm input, #addProductForm select');
+  inputs[0].value = p.name;
+  document.getElementById('categorySelect').value = p.category;
+  document.getElementById('brandSelect').value = p.brand;
+  inputs[4].value = p.retailPrice;
+  inputs[5].value = p.wholesalePrice;
+  inputs[6].value = p.minOrder;
+  document.querySelector(`input[name="minType"][value="${p.minType}"]`).checked = true;
+  editIndex = i;
+  addProductBtn.click();
+}
+
+// جستجو
+document.getElementById('searchInput').addEventListener('input', function () {
+  renderProducts(this.value.trim().toLowerCase());
+});
+
+// اجرای اولیه
+renderProducts();
+renderCategories();
+renderBrands();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+/* ریست اولیه */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* بدنه کلی */
+  body {
+    font-family: "Vazirmatn", sans-serif;
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  /* استایل سایدبار */
+  aside {
+    width: 220px;
+    background: #1e1e1e;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+  }
+  
+  aside h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: gold;
+  }
+  
+  aside a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 5px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+    font-size: 16px;
+  }
+  
+  aside a:hover {
+    background: gold;
+    color: black;
+  }
+  
+  /* دکمه خروج */
+  .logout-btn {
+    margin-top: auto;
+    background: crimson;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .logout-btn:hover {
+    background: darkred;
+  }
+  
+  /* محتوای اصلی */
+  main {
+    margin-right: 220px;
+    padding: 30px;
+  }
+  
+  /* بخش سفارشات یا تیکت‌ها */
+  #orders, #tickets {
+    display: grid;
+    gap: 20px;
+  }
+  
+  .order-item, .ticket-item {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .order-item:hover, .ticket-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+  }
+  
+  .order-item h3, .ticket-item h3 {
+    margin-bottom: 10px;
+    color: #444;
+  }
+  
+  .order-item p, .ticket-item p {
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+  
+  /* ریسپانسیو */
+  @media(max-width: 768px) {
+    aside {
+      width: 180px;
+      padding: 15px;
+    }
+    main {
+      margin-right: 180px;
+      padding: 20px;
+    }
+    aside h2 {
+      font-size: 18px;
+    }
+    aside a {
+      font-size: 14px;
+    }
+  }
+  
