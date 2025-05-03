@@ -1,5 +1,3 @@
-// firebase.js
-
 const firebaseConfig = {
   apiKey: "AIzaSyDtg4qFG7edEizG0xKTr0RLKdxtaCHe45M",
   authDomain: "iranvabistore.firebaseapp.com",
@@ -10,10 +8,5 @@ const firebaseConfig = {
   measurementId: "G-NG60PS146Y"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-// Services
-const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
