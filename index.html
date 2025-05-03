@@ -314,49 +314,57 @@ loginForm.addEventListener('submit', function(e) {
   const mobile = document.getElementById("mobile").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+  // const users = JSON.parse(localStorage.getItem("users")) || [];
   const user = users.find(u => u.mobile === mobile && u.password === password);
 
-  if (user) {
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
-    alert("ورود موفق!");
-    location.reload();
-  } else {
-    alert("نام کاربری یا رمز عبور اشتباه است");
-  }
+  // if (user) {
+  //   localStorage.setItem("loggedInUser", JSON.stringify(user));
+  //   alert("ورود موفق!");
+  //   location.reload();
+  // } else {
+  //   alert("نام کاربری یا رمز عبور اشتباه است");
+  // }
 });
 
-const header = document.querySelector("header");
-const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-if (loggedInUser) {
-  const roleLabel = loggedInUser.role === "retail" ? "مغازه‌دار" : "عمده‌فروش";
-  header.innerHTML += `<span style="margin-right:1rem;">👤 نقش شما: ${roleLabel}</span>`;
-}
+// const header = document.querySelector("header");
+// const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+// if (loggedInUser) {
+//   const roleLabel = loggedInUser.role === "retail" ? "مغازه‌دار" : "عمده‌فروش";
+//   header.innerHTML += `<span style="margin-right:1rem;">👤 نقش شما: ${roleLabel}</span>`;
+// }
 
 
 
     // ذخیره‌سازی کاربران در localStorage هنگام ثبت‌نام
-signupForm.addEventListener('submit', function(e) {
-  e.preventDefault();
+// signupForm.addEventListener('submit', function(e) {
+//   e.preventDefault();
 
-  const shopName = signupForm.elements[0].value.trim();
-  const shopAddress = signupForm.elements[1].value.trim();
-  const mobile = signupForm.elements[2].value.trim();
-  const password = signupForm.elements[3].value.trim();
-  const role = signupForm.querySelector('input[name="userRole"]:checked')?.value;
+//   const shopName = signupForm.elements[0].value.trim();
+//   const shopAddress = signupForm.elements[1].value.trim();
+//   const mobile = signupForm.elements[2].value.trim();
+//   const password = signupForm.elements[3].value.trim();
+//   const role = signupForm.querySelector('input[name="userRole"]:checked')?.value;
 
-  const fullName = "کاربر جدید";
+//   const fullName = "کاربر جدید";
 
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  users.push({ fullName, shopName, shopAddress, role, mobile, password });
-  localStorage.setItem("users", JSON.stringify(users));
+//   const users = JSON.parse(localStorage.getItem("users")) || [];
+//   users.push({ fullName, shopName, shopAddress, role, mobile, password });
+//   localStorage.setItem("users", JSON.stringify(users));
 
-  alert("ثبت‌نام با موفقیت انجام شد!");
-  document.getElementById('loginModal').querySelector('.btn-close').click();
-});
+//   alert("ثبت‌نام با موفقیت انجام شد!");
+//   document.getElementById('loginModal').querySelector('.btn-close').click();
+// });
 
 </script>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
+
+<!-- پروژه شما -->
+<script src="firebase.js"></script>
+<script src="login-register.js"></script>
+  
 
 </body>
 </html>
